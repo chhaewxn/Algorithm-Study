@@ -2,45 +2,45 @@
 #include <vector>
 #include <algorithm>
 
+using namespace std;
+
 struct Applicant {
-    int documentScore;
-    int interviewScore;
+    int document_score;
+    int interview_score;
 };
 
 bool compareByDocumentScore(const Applicant &a, const Applicant &b) {
-    return a.documentScore < b.documentScore;
+    return a.document_score < b.document_score;
 }
 
 void hireApplicants(const std::vector<Applicant> &applicants) {
-    int hired = 1; // 첫 번째 지원자는 무조건 합격
-    int minInterviewScore = applicants[0].interviewScore;
+    int hired = 1;
+    int minInterviewScore = applicants[0].interview_score;
 
     for (int i = 1; i < applicants.size(); ++i) {
-        if (applicants[i].interviewScore < minInterviewScore) {
-            minInterviewScore = applicants[i].interviewScore;
+        if (applicants[i].interview_score < minInterviewScore) {
+            minInterviewScore = applicants[i].interview_score;
             hired++;
         }
     }
 
-    std::cout << hired << "\n";
+    cout << hired << "\n";
 }
 
 int main() {
-    int testCases;
-    std::cin >> testCases;
+    int test_cases;
+    cin >> test_cases;
 
-    while (testCases--) {
+    while (test_cases--) {
         int n;
-        std::cin >> n;
+        cin >> n;
 
-        std::vector<Applicant> applicants(n);
-
+        vector<Applicant> applicants(n);
         for (int i = 0; i < n; ++i) {
-            std::cin >> applicants[i].documentScore >> applicants[i].interviewScore;
+            cin >> applicants[i].document_score >> applicants[i].interview_score;
         }
 
-        // 문서 성적을 기준으로 오름차순 정렬
-        std::sort(applicants.begin(), applicants.end(), compareByDocumentScore);
+        sort(applicants.begin(), applicants.end(), compareByDocumentScore);
 
         hireApplicants(applicants);
     }
