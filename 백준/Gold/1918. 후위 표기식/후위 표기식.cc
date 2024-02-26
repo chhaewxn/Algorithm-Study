@@ -51,9 +51,6 @@ string infixToPostfix(const string& infix) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     string infix;
     cin >> infix;
 
