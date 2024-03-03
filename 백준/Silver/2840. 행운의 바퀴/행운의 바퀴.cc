@@ -1,57 +1,54 @@
 #include <iostream>
 #include <vector>
+#include <unordered_set>
 
 using namespace std;
 
-void luckyWheel(int N, int K) {
-    vector<char> wheel(N, '?');
-    auto iter = wheel.begin();
+int main() {
+    int n, k;
+    cin >> n >> k;
 
-    for (int i = 0; i < K; ++i) {
-        int S;
-        char C;
-        cin >> S >> C;
-        S %= N;
+    vector<char> data(n, '?');
+    int idx = 0;
+    bool check = true;
 
-        for (int j = 0; j < S; ++j) {
-            if (iter == wheel.begin())
-                iter = wheel.end() - 1;
-            else
-                --iter;
-        }
+    for (int i = 0; i < k; ++i) {
+        int num;
+        char alphabet;
+        cin >> num >> alphabet;
 
-        if (*iter == '?')
-            *iter = C;
-        else if (*iter != C) {
-            cout << "!\n";
-            return;
+        idx = (idx + num) % n;
+
+        if (data[idx] != '?') {
+            if (data[idx] == alphabet) {
+                continue;
+            }
+            check = false;
+        } else {
+            data[idx] = alphabet;
         }
     }
 
-    for (auto outer = wheel.begin(); outer != wheel.end(); ++outer) {
-        for (auto inner = wheel.begin(); inner != wheel.end(); ++inner) {
-            if (*outer == *inner && outer != inner && *inner != '?') {
-                cout << "!\n";
-                return;
+    for (int i = 0; i < n; ++i) {
+        if (data[i] == '?') {
+            continue;
+        }
+        for (int j = i + 1; j < n; ++j) {
+            if (data[i] == data[j]) {
+                check = false;
+                break;
             }
         }
     }
 
-    for (int i = 0; i < N; ++i) {
-        if (iter == wheel.end())
-            iter = wheel.begin();
-        cout << *iter;
-        ++iter;
+    if (check) {
+        for (int i = 0; i < n; ++i) {
+            cout << data[idx];
+            idx = (idx - 1 + n) % n;
+        }
+    } else {
+        cout << '!';
     }
-
-    cout << "\n";
-}
-
-int main() {
-    int N, K;
-    cin >> N >> K;
-
-    luckyWheel(N, K);
 
     return 0;
 }
