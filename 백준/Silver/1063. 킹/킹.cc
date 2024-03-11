@@ -1,46 +1,46 @@
 #include <iostream>
-#include <map>
 #include <string>
+#include <map>
+
 using namespace std;
 
-// 방향에 따른 이동 값을 저장하는 맵
-map<string, pair<int, int>> MOVE_DIRECTION = {
+// 방향에 따른 이동 값을 저장
+map<string, pair<int, int>> MOVE_DIRECTION = { 
     {"R", {0, 1}}, {"L", {0, -1}},
     {"B", {-1, 0}}, {"T", {1, 0}},
     {"RT", {1, 1}}, {"LT", {1, -1}},
     {"RB", {-1, 1}}, {"LB", {-1, -1}}
 };
 
-// 체스판 위의 위치를 좌표로 변환하는 함수
+// 체스판 위의 위치를 좌표로 변환
 pair<int, int> positionToCoordinate(string position) {
     return {position[1] - '1', position[0] - 'A'};
 }
 
-// 좌표를 체스판 위의 위치로 변환하는 함수
+// 좌표를 체스판 위의 위치로 변환
 string coordinateToPosition(pair<int, int> coordinate) {
     return string(1, 'A' + coordinate.second) + to_string(coordinate.first + 1);
 }
 
-// 주어진 이동이 체스판 내로 이루어지는지 확인하는 함수
+// 주어진 이동이 체스판 내로 이루어지는지 확인
 bool isValidMove(int row, int col) {
     return row >= 0 && row < 8 && col >= 0 && col < 8;
 }
 
 int main() {
     string king_position, stone_position, move;
-    int n_moves;
-    cin >> king_position >> stone_position >> n_moves;
+    int n;
+    cin >> king_position >> stone_position >> n;
 
     // 킹과 돌의 초기 위치를 좌표로 변환
     pair<int, int> king = positionToCoordinate(king_position);
     pair<int, int> stone = positionToCoordinate(stone_position);
 
-    while (n_moves--) {
+    while (n--) {
         cin >> move;
         pair<int, int> direction = MOVE_DIRECTION[move];
         pair<int, int> next_king = {king.first + direction.first, king.second + direction.second};
 
-        // 킹이 체스판을 벗어나지 않는다면
         if (isValidMove(next_king.first, next_king.second)) {
             // 킹의 다음 위치가 돌의 위치와 같다면
             if (next_king == stone) {
@@ -57,7 +57,6 @@ int main() {
         }
     }
 
-    // 최종 위치 출력
     cout << coordinateToPosition(king) << '\n' << coordinateToPosition(stone) << '\n';
 
     return 0;
