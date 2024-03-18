@@ -1,19 +1,14 @@
 #include <iostream>
 #include <queue>
+
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    int n;
-    cin >> n; // 선물의 개수 입력받기
-    
-    priority_queue<int> pq; // 우선순위 큐 생성
+void christmasGifts(int n) {
+    priority_queue<int> pq;
     
     for (int i = 0; i < n; i++) {
         int m;
-        cin >> m; // 각 선물의 종류와 개수 입력받기
+        cin >> m; 
         
         if (m == 0) { // 선물을 꺼내는 경우
             if (pq.empty()) {
@@ -30,6 +25,16 @@ int main() {
             }
         }
     }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    cin >> n; 
+    
+    christmasGifts(n);
     
     return 0;
 }
