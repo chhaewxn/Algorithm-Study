@@ -1,35 +1,19 @@
-def calculate_budget(budgets, cap):
-    total = 0
-    for budget in budgets:
-        total += min(budget, cap)
-    return total
+import sys
 
-def binary_search(budgets, target):
-    left = 0
-    right = max(budgets)
-    result = 0
+n = int(sys.stdin.readline())
+budget = list(map(int, sys.stdin.readline().split()))
+m = int(sys.stdin.readline())
+budget.sort()
 
+def binary(budget):
+    left, right = 0, max(budget)
     while left <= right:
-        mid = (left + right) // 2
-        total = calculate_budget(budgets, mid)
+        mid, sum_ = (left + right) // 2, 0
+        for num in budget: 
+            sum_ += min(mid, num)
+        if sum_ > m: right = mid - 1
+        else: left = mid + 1
+        
+    return right
 
-        if total <= target:
-            result = mid
-            left = mid + 1
-        else:
-            right = mid - 1
-
-    return result
-
-def main():
-    n = int(input())  # 지방의 수
-    budgets = list(map(int, input().split()))  # 각 지방의 예산
-    total_budget = int(input())  # 총 예산
-
-    budgets.sort()  # 이진 탐색을 위해 예산 정렬
-
-    answer = binary_search(budgets, total_budget)
-    print(answer)
-
-if __name__ == "__main__":
-    main()
+print(binary(budget))
