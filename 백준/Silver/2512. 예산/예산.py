@@ -1,19 +1,22 @@
-import sys
+n = int(input())
+budget = list(map(int, input().split()))
+m = int(input())
 
-n = int(sys.stdin.readline())
-budget = list(map(int, sys.stdin.readline().split()))
-m = int(sys.stdin.readline())
-budget.sort()
+low, high = 0, max(budget)
+answer = 0
 
-def binary(budget):
-    left, right = 0, max(budget)
-    while left <= right:
-        mid, sum_ = (left + right) // 2, 0
-        for num in budget: 
-            sum_ += min(mid, num)
-        if sum_ > m: right = mid - 1
-        else: left = mid + 1
-        
-    return right
+if sum(budget) <= m:
+    print(high)
+else:
+    while low <= high:
+        mid = (low + high) // 2
 
-print(binary(budget))
+        total_budget = sum(min(mid, b) for b in budget)
+
+        if total_budget <= m:
+            answer = mid
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    print(answer)
