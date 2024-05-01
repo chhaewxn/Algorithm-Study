@@ -1,28 +1,25 @@
+# 21921번 - 블로그 
 import sys
 
-# 입력 받기
-n, x = map(int, sys.stdin.readline().split())
-visitors = list(map(int, sys.stdin.readline().split()))
+n,x = map(int, sys.stdin.readline().split())
+visitor = list(map(int, sys.stdin.readline().split()))
 
-# 초기 최대 방문자 수 및 그 기간 동안의 총 방문자 수 계산
-max_sum = sum(visitors[:x])
-current_sum = max_sum
+# x 기간 동안 총 방문자 수 합 계산 
+max_sum = sum(visitor[:x])
+now_sum = max_sum
 count = 1
 
 for i in range(x, n):
-    # 현재 기간의 방문자 수 업데이트: 새로운 날짜 추가 및 가장 오래된 날짜 제거
-    current_sum += visitors[i] - visitors[i-x]
+  now_sum = now_sum - visitor[i-x] + visitor[i] # 오래된 날짜의 방문자 수는 빼고, 새로운 날짜 추가하기
 
-    # 최대 방문자 수 갱신
-    if current_sum > max_sum:
-        max_sum = current_sum
-        count = 1
-    elif current_sum == max_sum:
-        count += 1
+  if now_sum > max_sum :
+    max_sum = now_sum
+    count = 1 # 최대 방문자 수 갱신
+  elif now_sum == max_sum :
+    count += 1 # 최대 방문자 수가 동일하면 count +1 추가
 
-# 출력
 if max_sum == 0:
-    print("SAD")
+  print("SAD")
 else:
-    print(max_sum)
-    print(count)
+  print(max_sum)
+  print(count)
