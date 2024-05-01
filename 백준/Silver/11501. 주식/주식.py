@@ -2,19 +2,17 @@
 
 import sys
 
-# 테스트 케이스의 수를 입력받습니다.
-T = int(sys.stdin.readline())
+input = sys.stdin.readline
+
+T = int(input()) # T: 테스트케이스 개수
 
 for _ in range(T):
-    # 주식 가격의 개수 입력
-    n = int(sys.stdin.readline())
-    # 주식 가격 입력
-    prices = list(map(int,sys.stdin.readline().split()))
     
-    # 최대 이익을 저장할 변수
+    n = int(input())
+    prices = list(map(int, input().split()))
+    
     max_profit = 0
-    # 뒤에서부터 확인할 현재 최대 주식 가격
-    max_price = 0
+    max_price = 0 # 현재 최대 주식 가격
     
     # 뒤에서부터 주식 가격을 확인
     for i in range(n-1, -1, -1):
@@ -23,9 +21,8 @@ for _ in range(T):
         # 현재 가격이 현재까지의 최대 가격보다 큰 경우, 최대 가격을 현재 가격으로 갱신
         if current_price > max_price:
             max_price = current_price
-        # 현재 가격이 최대 가격보다 작은 경우, 이 차이만큼 이익을 얻을 수 있으므로 최대 이익에 더해줍니다.
+        # 현재 가격이 최대 가격보다 작은 경우, 이 차이만큼이 이익이므로 더하기
         else:
             max_profit += max_price - current_price
     
-    # 최대 이익 출력
     print(max_profit)
