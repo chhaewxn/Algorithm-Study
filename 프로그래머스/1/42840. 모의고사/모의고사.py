@@ -1,24 +1,37 @@
 def solution(answers):
-    patterns = [
-        [1, 2, 3, 4, 5],  # 1번 수포자
-        [2, 1, 2, 3, 2, 4, 2, 5],  # 2번 수포자
-        [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]  # 3번 수포자
-    ]
     
-    # 각 수포자별 정답 수를 저장할 리스트
-    scores = [0, 0, 0]
+    # 각 수포자의 찍기 패턴 
+    pattern1 = [1, 2, 3, 4, 5]  
+    pattern2 = [2, 1, 2, 3, 2, 4, 2, 5]  
+    pattern3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]  
     
-    # 각 문제에 대해 수포자들의 답과 정답 비교
-    for i, answer in enumerate(answers):
-        for j, pattern in enumerate(patterns):
-            # 패턴의 길이로 나눈 나머지를 이용하여 현재 문제에 대한 각 수포자의 답 확인
-            if pattern[i % len(pattern)] == answer:
-                scores[j] += 1
+    scores = [0, 0, 0]  
+    patterns = [pattern1, pattern2, pattern3]
     
-    # 최고 점수 찾기
-    max_score = max(scores)
+    # 모든 문제에 대해 각 수포자의 답과 정답을 비교
+    for i in range(len(answers)):
+        correct_answer = answers[i]
+        
+        # 각 수포자(0, 1, 2번 인덱스)에 대해 확인
+        for person in range(3):
+            current_pattern = patterns[person]
+            
+            # 패턴이 반복되므로 % 사용
+            person_answer = current_pattern[i % len(current_pattern)]
+            
+            if person_answer == correct_answer:
+                scores[person] += 1 
+            else:
+                scores[person] += 0
     
-    # 최고 점수를 받은 사람들 (인덱스는 0부터 시작하므로 1을 더해줌)
-    result = [i + 1 for i, score in enumerate(scores) if score == max_score]
+    max_score = 0
+    for score in scores:
+        if score > max_score:
+            max_score = score
     
+    result = []
+    for i in range(3):
+        if scores[i] == max_score:
+            result.append(i + 1) 
+            
     return result
