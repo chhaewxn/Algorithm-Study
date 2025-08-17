@@ -1,14 +1,16 @@
 def solution(n, left, right):
+    # 큰 n 값에 대해서는 전체 배열을 만들지 않고 필요한 값만 계산
+    
+    # 결과 배열
     result = []
     
-    # left부터 right까지의 위치에 해당하는 값만 계산
-    for i in range(left, right + 1):
-        row = i // n  
-        col = i % n   
+    # left부터 right까지만 계산
+    for idx in range(left, right + 1):
+        # 1차원 인덱스를 2차원 좌표로 변환
+        row = idx // n  # 행 번호 
+        col = idx % n   # 열 번호 
         
-        # (row, col) 위치의 값은 max(row, col) + 1
-        # 왜냐면 i행 i열까지는 i로 채워지기 때문
-        value = max(row, col) + 1
+        value = max(row + 1, col + 1)
         result.append(value)
     
     return result
